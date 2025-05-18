@@ -1,8 +1,7 @@
 package main
 
 import (
-	// "fmt"
-	notifactory "git/go-design-pattern/factory-method-pattern/noti-factory"
+	strategypattern "git/go-design-pattern/strategy-pattern"
 	// "git/go-design-pattern/factory-method-pattern/notifier"
 	// templatemethodpattern "git/go-design-pattern/template-method-pattern"
 )
@@ -23,12 +22,29 @@ func main() {
 	//otp.HandleSendOTP(5)
 
 	// ==================== FACTORY METHOD PATTERN ============================
-	slackFactory := &notifactory.SlackNotifierFactory{}
-	notifier := slackFactory.CreateNotifier()
-	notifier.SendNotification("Hello")
+	// slackFactory := &notifactory.SlackNotifierFactory{}
+	// notifier := slackFactory.CreateNotifier()
+	// notifier.SendNotification("Hello")
 
-	mailFactory := &notifactory.MailNotifierFactory{}
-	notifier = mailFactory.CreateNotifier()
-	notifier.SendNotification("slack")
+	// mailFactory := &notifactory.MailNotifierFactory{}
+	// notifier = mailFactory.CreateNotifier()
+	// notifier.SendNotification("slack")
 
+	// ==================== STRATEGY PATTERN ============================
+	paymentProcessor := &strategypattern.PaymentProcessor{}
+	// Choose payment method
+	// Credit-card-method:
+	creditCardPaymentMethod := strategypattern.CreditCardPayment{}
+	paymentProcessor.ChoosePaymentMethod(&creditCardPaymentMethod)
+	paymentProcessor.ProcessPayment(100)
+
+	// Paypal-method:
+	paypalPaymentMethod := strategypattern.PaypalPayment{}
+	paymentProcessor.ChoosePaymentMethod(&paypalPaymentMethod)
+	paymentProcessor.ProcessPayment(200)
+
+	// Crypto-method:
+	cryptoPaymentMethod := strategypattern.CryptoPayment{}
+	paymentProcessor.ChoosePaymentMethod(&cryptoPaymentMethod)
+	paymentProcessor.ProcessPayment(300)
 }
