@@ -1,10 +1,14 @@
 package main
 
 import (
-	strategypattern "git/go-design-pattern/strategy-pattern"
-	// "git/go-design-pattern/factory-method-pattern/notifier"
-	// templatemethodpattern "git/go-design-pattern/template-method-pattern"
+	"fmt"
+
+	proxypattern "git/go-design-pattern/proxy-pattern"
 )
+
+// strategypattern "git/go-design-pattern/strategy-pattern"
+// "git/go-design-pattern/factory-method-pattern/notifier"
+// templatemethodpattern "git/go-design-pattern/template-method-pattern"
 
 func main() {
 
@@ -31,20 +35,33 @@ func main() {
 	// notifier.SendNotification("slack")
 
 	// ==================== STRATEGY PATTERN ============================
-	paymentProcessor := &strategypattern.PaymentProcessor{}
-	// Choose payment method
-	// Credit-card-method:
-	creditCardPaymentMethod := strategypattern.CreditCardPayment{}
-	paymentProcessor.ChoosePaymentMethod(&creditCardPaymentMethod)
-	paymentProcessor.ProcessPayment(100)
+	// paymentProcessor := &strategypattern.PaymentProcessor{}
+	// // Choose payment method
+	// // Credit-card-method:
+	// creditCardPaymentMethod := strategypattern.CreditCardPayment{}
+	// paymentProcessor.ChoosePaymentMethod(&creditCardPaymentMethod)
+	// paymentProcessor.ProcessPayment(100)
 
-	// Paypal-method:
-	paypalPaymentMethod := strategypattern.PaypalPayment{}
-	paymentProcessor.ChoosePaymentMethod(&paypalPaymentMethod)
-	paymentProcessor.ProcessPayment(200)
+	// // Paypal-method:
+	// paypalPaymentMethod := strategypattern.PaypalPayment{}
+	// paymentProcessor.ChoosePaymentMethod(&paypalPaymentMethod)
+	// paymentProcessor.ProcessPayment(200)
 
-	// Crypto-method:
-	cryptoPaymentMethod := strategypattern.CryptoPayment{}
-	paymentProcessor.ChoosePaymentMethod(&cryptoPaymentMethod)
-	paymentProcessor.ProcessPayment(300)
+	// // Crypto-method:
+	// cryptoPaymentMethod := strategypattern.CryptoPayment{}
+	// paymentProcessor.ChoosePaymentMethod(&cryptoPaymentMethod)
+	// paymentProcessor.ProcessPayment(300)
+
+	// ==================== PROXY PATTERN ============================
+	realService := &proxypattern.Service{}
+	nginxProxy := proxypattern.NewNginxProxy(realService, make(map[string]int), 2)
+	status, response := nginxProxy.HandleRequest("https://google.com", "GET")
+	fmt.Println(status, response)
+
+	status, response = nginxProxy.HandleRequest("https://google.com", "GET")
+	fmt.Println(status, response)
+
+	status, response = nginxProxy.HandleRequest("https://google.com", "GET")
+	fmt.Println(status, response)
+
 }
