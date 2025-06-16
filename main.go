@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	proxypattern "git/go-design-pattern/proxy-pattern"
+	facadepattern "git/go-design-pattern/facade-pattern"
 )
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
@@ -52,16 +52,25 @@ func main() {
 	// paymentProcessor.ChoosePaymentMethod(&cryptoPaymentMethod)
 	// paymentProcessor.ProcessPayment(300)
 
-	// ==================== PROXY PATTERN ============================
-	realService := &proxypattern.Service{}
-	nginxProxy := proxypattern.NewNginxProxy(realService, make(map[string]int), 2)
-	status, response := nginxProxy.HandleRequest("https://google.com", "GET")
-	fmt.Println(status, response)
+	// ==================== PROXY PATTERN ====================
+	// realService := &proxypattern.Service{}
+	// nginxProxy := proxypattern.NewNginxProxy(realService, make(map[string]int), 2)
+	// status, response := nginxProxy.HandleRequest("https://google.com", "GET")
+	// fmt.Println(status, response)
 
-	status, response = nginxProxy.HandleRequest("https://google.com", "GET")
-	fmt.Println(status, response)
+	// status, response = nginxProxy.HandleRequest("https://google.com", "GET")
+	// fmt.Println(status, response)
 
-	status, response = nginxProxy.HandleRequest("https://google.com", "GET")
-	fmt.Println(status, response)
+	// status, response = nginxProxy.HandleRequest("https://google.com", "GET")
+	// fmt.Println(status, response)
 
+	// ==================== FACADE PATTERN ====================
+	// this helps hide the complexity of the subsystem, so the client only need to know the facade interface.
+	// And client doesn't need to care to other dependencies from the subsystem (decoupling).
+	// The facade pattern is a good choice when you want to simplify a complex system and hide the complexity from the client.
+	// The facade pattern collect all the dependencies from the subsystem and provide a simple interface to the client.
+	walletFacade := facadepattern.NewMyWalletFacade("0271001108850", "1234", 100)
+	if err := walletFacade.AddMoneyToWallet("0271001108850", "1234", 100); err != nil {
+		fmt.Println(err)
+	}
 }

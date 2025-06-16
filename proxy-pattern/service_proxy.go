@@ -14,13 +14,6 @@ func NewNginxProxy(server Server, rateLimiter map[string]int, maxAllowedRequest 
 	}
 }
 
-func (n *NginxProxy) HandleRequest(url, method string) (int, string) {
-	if !n.CheckRateLimit(url) {
-		return 429, "Too many requests"
-	}
-	return n.server.HandleRequest(url, method)
-}
-
 func (n *NginxProxy) CheckRateLimit(url string) bool {
 	count, ok := n.rateLimiter[url]
 	if !ok {
@@ -32,4 +25,11 @@ func (n *NginxProxy) CheckRateLimit(url string) bool {
 	}
 	n.rateLimiter[url] += 1
 	return true
+}
+
+func (n *NginxProxy) HandleRequest(url, method string) (int, string) {
+	if !n.CheckRateLimit(url) {
+		return 429, "Too many requests"
+	}
+	return n.server.HandleRequest(url, method)
 }
