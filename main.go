@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-
-	facadepattern "git/go-design-pattern/facade-pattern"
-)
+import adapterpattern "git/go-design-pattern/adapter-pattern"
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
 // "git/go-design-pattern/factory-method-pattern/notifier"
@@ -69,8 +65,25 @@ func main() {
 	// And client doesn't need to care to other dependencies from the subsystem (decoupling).
 	// The facade pattern is a good choice when you want to simplify a complex system and hide the complexity from the client.
 	// The facade pattern collect all the dependencies from the subsystem and provide a simple interface to the client.
-	walletFacade := facadepattern.NewMyWalletFacade("0271001108850", "1234", 100)
-	if err := walletFacade.AddMoneyToWallet("0271001108850", "1234", 100); err != nil {
-		fmt.Println(err)
-	}
+	// walletFacade := facadepattern.NewMyWalletFacade("0271001108850", "1234", 100)
+	// if err := walletFacade.AddMoneyToWallet("0271001108850", "1234", 100); err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// ==================== ADAPTER PATTERN ====================
+	// current system is using typeC port to charge the phone, but we have a new phone that uses lightning port.
+	// we need to create an adapter to make the lightning port compatible with the typeC port.
+
+	typeCCharger := adapterpattern.NewTypeCCharger()
+	typeCCharger.Charge()
+
+	lightningCharger := adapterpattern.NewLightningCharger()
+	typeCAdapter := adapterpattern.NewTypeCChargerAdapter(lightningCharger)
+	typeCAdapter.Charge()
+
+	// ==================== DECORATOR PATTERN ====================
+	// we want to add a new feature to the existing code without changing the existing code.
+	// for example, we want to add a new feature to the existing code to log the request and response.
+	// we can create a new decorator to add the new feature to the existing code.
+
 }
