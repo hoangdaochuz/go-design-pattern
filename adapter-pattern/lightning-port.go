@@ -9,7 +9,7 @@ func NewLightningCharger() *LightningCharger {
 	return &LightningCharger{}
 }
 
-func (lightNightCharger *LightningCharger) ProcessLightningCharge(tilPercent int) error {
+func (lightNingCharger *LightningCharger) ProcessLightningCharge(tilPercent int) error {
 	fmt.Println("Charging phone with lightning port")
 	return nil
 }
