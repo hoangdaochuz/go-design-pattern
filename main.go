@@ -1,6 +1,11 @@
 package main
 
-import adapterpattern "git/go-design-pattern/adapter-pattern"
+import (
+	"fmt"
+
+	adapterpattern "git/go-design-pattern/adapter-pattern"
+	decoratorpattern "git/go-design-pattern/decorator-pattern"
+)
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
 // "git/go-design-pattern/factory-method-pattern/notifier"
@@ -86,4 +91,24 @@ func main() {
 	// for example, we want to add a new feature to the existing code to log the request and response.
 	// we can create a new decorator to add the new feature to the existing code.
 
+	// create a base pizza
+	basePizza := decoratorpattern.NewBasePizza("Base pizza ", 100)
+	fmt.Println(basePizza.GetDescription(), basePizza.GetPrice())
+
+	// add toppings to the base pizza
+	// basePizza + tomato ==> tomato pizza
+	tomatoPizza := decoratorpattern.NewTomatoPizza(basePizza)
+	fmt.Println(tomatoPizza.GetDescription(), tomatoPizza.GetPrice())
+
+	// tomatoPizza + cheese ==> tomato chees pizza
+	tomatoCheesePizza := decoratorpattern.NewCheesePizza(tomatoPizza)
+	fmt.Println(tomatoCheesePizza.GetDescription(), tomatoCheesePizza.GetPrice())
+
+	// tomatoCheesePizza + seafood ==> tomato cheese seafood pizza
+	tomatoCheeseSeafoodPizza := decoratorpattern.NewSeafoodPizza(tomatoCheesePizza)
+	fmt.Println(tomatoCheeseSeafoodPizza.GetDescription(), tomatoCheeseSeafoodPizza.GetPrice())
+
+	// basePizza + seafood ==> seafood pizza
+	seafoodPizza := decoratorpattern.NewSeafoodPizza(basePizza)
+	fmt.Println(seafoodPizza.GetDescription(), seafoodPizza.GetPrice())
 }
