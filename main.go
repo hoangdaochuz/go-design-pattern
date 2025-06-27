@@ -1,11 +1,6 @@
 package main
 
-import (
-	"fmt"
-
-	adapterpattern "git/go-design-pattern/adapter-pattern"
-	decoratorpattern "git/go-design-pattern/decorator-pattern"
-)
+import productfactory "git/go-design-pattern/abstract-factory-pattern/product-factory"
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
 // "git/go-design-pattern/factory-method-pattern/notifier"
@@ -79,36 +74,55 @@ func main() {
 	// current system is using typeC port to charge the phone, but we have a new phone that uses lightning port.
 	// we need to create an adapter to make the lightning port compatible with the typeC port.
 
-	typeCCharger := adapterpattern.NewTypeCCharger()
-	typeCCharger.Charge()
+	// typeCCharger := adapterpattern.NewTypeCCharger()
+	// typeCCharger.Charge()
 
-	lightningCharger := adapterpattern.NewLightningCharger()
-	typeCAdapter := adapterpattern.NewTypeCChargerAdapter(lightningCharger)
-	typeCAdapter.Charge()
+	// lightningCharger := adapterpattern.NewLightningCharger()
+	// typeCAdapter := adapterpattern.NewTypeCChargerAdapter(lightningCharger)
+	// typeCAdapter.Charge()
 
 	// ==================== DECORATOR PATTERN ====================
 	// we want to add a new feature to the existing code without changing the existing code.
 	// for example, we want to add a new feature to the existing code to log the request and response.
 	// we can create a new decorator to add the new feature to the existing code.
 
-	// create a base pizza
-	basePizza := decoratorpattern.NewBasePizza("Base pizza ", 100)
-	fmt.Println(basePizza.GetDescription(), basePizza.GetPrice())
+	// // create a base pizza
+	// basePizza := decoratorpattern.NewBasePizza("Base pizza ", 100)
+	// fmt.Println(basePizza.GetDescription(), basePizza.GetPrice())
 
-	// add toppings to the base pizza
-	// basePizza + tomato ==> tomato pizza
-	tomatoPizza := decoratorpattern.NewTomatoPizza(basePizza)
-	fmt.Println(tomatoPizza.GetDescription(), tomatoPizza.GetPrice())
+	// // add toppings to the base pizza
+	// // basePizza + tomato ==> tomato pizza
+	// tomatoPizza := decoratorpattern.NewTomatoPizza(basePizza)
+	// fmt.Println(tomatoPizza.GetDescription(), tomatoPizza.GetPrice())
 
-	// tomatoPizza + cheese ==> tomato chees pizza
-	tomatoCheesePizza := decoratorpattern.NewCheesePizza(tomatoPizza)
-	fmt.Println(tomatoCheesePizza.GetDescription(), tomatoCheesePizza.GetPrice())
+	// // tomatoPizza + cheese ==> tomato chees pizza
+	// tomatoCheesePizza := decoratorpattern.NewCheesePizza(tomatoPizza)
+	// fmt.Println(tomatoCheesePizza.GetDescription(), tomatoCheesePizza.GetPrice())
 
-	// tomatoCheesePizza + seafood ==> tomato cheese seafood pizza
-	tomatoCheeseSeafoodPizza := decoratorpattern.NewSeafoodPizza(tomatoCheesePizza)
-	fmt.Println(tomatoCheeseSeafoodPizza.GetDescription(), tomatoCheeseSeafoodPizza.GetPrice())
+	// // tomatoCheesePizza + seafood ==> tomato cheese seafood pizza
+	// tomatoCheeseSeafoodPizza := decoratorpattern.NewSeafoodPizza(tomatoCheesePizza)
+	// fmt.Println(tomatoCheeseSeafoodPizza.GetDescription(), tomatoCheeseSeafoodPizza.GetPrice())
 
-	// basePizza + seafood ==> seafood pizza
-	seafoodPizza := decoratorpattern.NewSeafoodPizza(basePizza)
-	fmt.Println(seafoodPizza.GetDescription(), seafoodPizza.GetPrice())
+	// // basePizza + seafood ==> seafood pizza
+	// seafoodPizza := decoratorpattern.NewSeafoodPizza(basePizza)
+	// fmt.Println(seafoodPizza.GetDescription(), seafoodPizza.GetPrice())
+
+	// ==================== SINGLETON PATTERN ====================
+	// start 100 goroutine to get the singleton instance
+	// for i := 0; i < 100; i++ {
+	// 	go func() {
+	// 		_ = singletonpattern.GetInstance()
+	// 	}()
+	// }
+
+	// ==================== ABSTRACT FACTORY PATTERN ====================
+	nikeFactory := &productfactory.NikeFactory{}
+	// adidasFactory := &productfactory.AdidasFactory{}
+	// pumaFactory := &productfactory.PumaFactory{}
+	// suppose user want to buy nike shoes and other products, we can use the abstract factory to create the products
+	// we can make sure the products are compatible with each other
+	nikeFactory.CreateShoe()
+	nikeFactory.CreatePant()
+	// if user want to buy adidas shoes and other products, we can use the abstract factory to create the products and so on
+	// On the real product, it will have config for user to choose the brand and the products they want to buy or sth like that
 }
