@@ -1,6 +1,10 @@
 package main
 
-import productfactory "git/go-design-pattern/abstract-factory-pattern/product-factory"
+import (
+	"fmt"
+	builderpattern "git/go-design-pattern/builder-pattern"
+	prototypepattern "git/go-design-pattern/prototype-pattern"
+)
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
 // "git/go-design-pattern/factory-method-pattern/notifier"
@@ -116,13 +120,52 @@ func main() {
 	// }
 
 	// ==================== ABSTRACT FACTORY PATTERN ====================
-	nikeFactory := &productfactory.NikeFactory{}
+	// nikeFactory := &productfactory.NikeFactory{}
 	// adidasFactory := &productfactory.AdidasFactory{}
 	// pumaFactory := &productfactory.PumaFactory{}
 	// suppose user want to buy nike shoes and other products, we can use the abstract factory to create the products
 	// we can make sure the products are compatible with each other
-	nikeFactory.CreateShoe()
-	nikeFactory.CreatePant()
+	// nikeFactory.CreateShoe()
+	// nikeFactory.CreatePant()
 	// if user want to buy adidas shoes and other products, we can use the abstract factory to create the products and so on
 	// On the real product, it will have config for user to choose the brand and the products they want to buy or sth like that
+
+	// ==================== BUILDER PATTERN ====================
+	// we want to build a house with different types of houses
+	// regular house, igloo, etc.
+	// we can use the builder pattern to build the house
+	// we can use the director to build the house
+	// we can use the builder to build the house
+
+	houseStoneBuilder := builderpattern.NewHouseStone()
+	houseWoodBuilder := builderpattern.NewHouseWood()
+
+	director := builderpattern.NewHouseDirector(houseStoneBuilder)
+	director.BuildHouse("stone", "Blue")
+
+	director = builderpattern.NewHouseDirector(houseWoodBuilder)
+	director.BuildHouse("wood", "Red")
+
+	// ==================== PROTOTYPE PATTERN ====================
+	// we want to create a new object by cloning the existing object
+	// we can use the prototype pattern to create a new object by cloning the existing object
+	file1 := prototypepattern.NewFile("File1")
+	file2 := prototypepattern.NewFile("File2")
+	file3 := prototypepattern.NewFile("File3")
+	file4 := prototypepattern.NewFile("File4")
+	subFolder1 := prototypepattern.NewFolder("SubFolder1", []prototypepattern.INode{
+		file4,
+	})
+
+	folder1 := prototypepattern.NewFolder("Folder1", []prototypepattern.INode{
+		file1,
+		file2,
+		file3,
+		subFolder1,
+	})
+
+	folder1.Print()
+	fmt.Println("--------------------------------")
+	folder2 := folder1.Clone()
+	folder2.Print()
 }
