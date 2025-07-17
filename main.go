@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
-	builderpattern "git/go-design-pattern/builder-pattern"
-	prototypepattern "git/go-design-pattern/prototype-pattern"
+	chainofresponsibilitypattern "git/go-design-pattern/chain-of-responsibility-pattern"
 )
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
@@ -137,35 +135,60 @@ func main() {
 	// we can use the director to build the house
 	// we can use the builder to build the house
 
-	houseStoneBuilder := builderpattern.NewHouseStone()
-	houseWoodBuilder := builderpattern.NewHouseWood()
+	// houseStoneBuilder := builderpattern.NewHouseStone()
+	// houseWoodBuilder := builderpattern.NewHouseWood()
 
-	director := builderpattern.NewHouseDirector(houseStoneBuilder)
-	director.BuildHouse("stone", "Blue")
+	// director := builderpattern.NewHouseDirector(houseStoneBuilder)
+	// director.BuildHouse("stone", "Blue")
 
-	director = builderpattern.NewHouseDirector(houseWoodBuilder)
-	director.BuildHouse("wood", "Red")
+	// director = builderpattern.NewHouseDirector(houseWoodBuilder)
+	// director.BuildHouse("wood", "Red")
 
 	// ==================== PROTOTYPE PATTERN ====================
 	// we want to create a new object by cloning the existing object
 	// we can use the prototype pattern to create a new object by cloning the existing object
-	file1 := prototypepattern.NewFile("File1")
-	file2 := prototypepattern.NewFile("File2")
-	file3 := prototypepattern.NewFile("File3")
-	file4 := prototypepattern.NewFile("File4")
-	subFolder1 := prototypepattern.NewFolder("SubFolder1", []prototypepattern.INode{
-		file4,
-	})
+	// file1 := prototypepattern.NewFile("File1")
+	// file2 := prototypepattern.NewFile("File2")
+	// file3 := prototypepattern.NewFile("File3")
+	// file4 := prototypepattern.NewFile("File4")
+	// subFolder1 := prototypepattern.NewFolder("SubFolder1", []prototypepattern.INode{
+	// 	file4,
+	// })
 
-	folder1 := prototypepattern.NewFolder("Folder1", []prototypepattern.INode{
-		file1,
-		file2,
-		file3,
-		subFolder1,
-	})
+	// folder1 := prototypepattern.NewFolder("Folder1", []prototypepattern.INode{
+	// 	file1,
+	// 	file2,
+	// 	file3,
+	// 	subFolder1,
+	// })
 
-	folder1.Print()
-	fmt.Println("--------------------------------")
-	folder2 := folder1.Clone()
-	folder2.Print()
+	// folder1.Print()
+	// fmt.Println("--------------------------------")
+	// folder2 := folder1.Clone()
+	// folder2.Print()
+
+	// =============== OBSERVER PATTERN =============
+	// user1 := observerpattern.NewUser("khai", "1")
+	// user2 := observerpattern.NewUser("Khang", "2")
+
+	// youtubeChannel := observerpattern.NewYoutubeChannel("Mixi Gaming")
+
+	// youtubeChannel.Register(user1)
+	// youtubeChannel.Register(user2)
+
+	// youtubeChannel.Notify("New videos have published by " + youtubeChannel.GetChannelName())
+
+	// =============== CHAIN OF RESPONSIBILITY ====================
+	reception := chainofresponsibilitypattern.ReceptionDepartment{}
+	doctor := chainofresponsibilitypattern.DoctorDepartment{}
+	medication := chainofresponsibilitypattern.MedicationDepartment{}
+	payment := chainofresponsibilitypattern.PaymentDepartment{}
+
+	reception.SetNext(&doctor)
+	doctor.SetNext(&medication)
+	medication.SetNext(&payment)
+
+	patient := chainofresponsibilitypattern.NewPatient("Khai")
+
+	reception.Execute(*patient)
 }
