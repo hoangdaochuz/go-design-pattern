@@ -1,7 +1,7 @@
 package main
 
 import (
-	chainofresponsibilitypattern "git/go-design-pattern/chain-of-responsibility-pattern"
+	commandpattern "git/go-design-pattern/command-pattern"
 )
 
 // strategypattern "git/go-design-pattern/strategy-pattern"
@@ -179,16 +179,26 @@ func main() {
 	// youtubeChannel.Notify("New videos have published by " + youtubeChannel.GetChannelName())
 
 	// =============== CHAIN OF RESPONSIBILITY ====================
-	reception := chainofresponsibilitypattern.ReceptionDepartment{}
-	doctor := chainofresponsibilitypattern.DoctorDepartment{}
-	medication := chainofresponsibilitypattern.MedicationDepartment{}
-	payment := chainofresponsibilitypattern.PaymentDepartment{}
+	// reception := chainofresponsibilitypattern.ReceptionDepartment{}
+	// doctor := chainofresponsibilitypattern.DoctorDepartment{}
+	// medication := chainofresponsibilitypattern.MedicationDepartment{}
+	// payment := chainofresponsibilitypattern.PaymentDepartment{}
 
-	reception.SetNext(&doctor)
-	doctor.SetNext(&medication)
-	medication.SetNext(&payment)
+	// reception.SetNext(&doctor)
+	// doctor.SetNext(&medication)
+	// medication.SetNext(&payment)
 
-	patient := chainofresponsibilitypattern.NewPatient("Khai")
+	// patient := chainofresponsibilitypattern.NewPatient("Khai")
 
-	reception.Execute(*patient)
+	// reception.Execute(*patient)
+
+	// ================= COMMAND PATTERN ========================
+	tv := commandpattern.NewTV(false)
+	onCommand := commandpattern.NewOnCommand(tv)
+	offCommand := commandpattern.NewOffCommand(tv)
+	button := &commandpattern.Button{}
+	button.SetCommand(onCommand)
+	button.Press()
+	button.SetCommand(offCommand)
+	button.Press()
 }
